@@ -8,8 +8,27 @@
 import SwiftUI
 
 struct ImageGalleryView: View {
+    let inspirations = NatureInspiration.examples()
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        GeometryReader { geomentry in
+            ScrollView {
+                LazyVGrid(columns: gridItem(for: geomentry.size.width), spacing: 0) {
+                    ForEach(inspirations) { inspiration in
+                        ImageAspectView(imageName: inspiration.imageName, frameAspectRatio: 1)
+                    }
+                }
+            }
+            
+            
+        }
+    }
+    
+    func gridItem(for width: CGFloat) -> [GridItem] {
+        
+        let numberOfColumns = Int(round(width / 200))
+        
+        return Array(repeating: GridItem(.flexible(minimum: 140, maximum: 350), spacing: 0), count: numberOfColumns)
     }
 }
 
